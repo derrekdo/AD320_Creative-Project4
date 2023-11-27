@@ -15,10 +15,10 @@
         //     .catch(e => console.error("Error: ", e));
         id("home-btn").addEventListener("click", () => toggleContent("home"));
         id("about-btn").addEventListener("click", () => toggleContent("about"));
-        id("search-btn").addEventListener("cilck", () => toggleContent("search"));
+        id("search-btn").addEventListener("click", () => toggleContent("monster"));
 
         id("search-btn").addEventListener("click", findMon);
-        id("name").addEventListener("keydown", e => {
+        id("input").addEventListener("keydown", e => {
             if (e.key === 'Enter') {
                 findMon();
             };
@@ -34,50 +34,49 @@
 
     function toggleContent(option) {
         hide();
-        let allButtons = qsa("button");
-        allButtons.forEach(button => {
-            button.classList.remove("active");
-        });
-
-        let selectedButton = id(option + "-btn");
-        if (selectedButton) {
-            selectedButton.classList.add("active");
-        }
-
-        let selectedContent = id(option);
-        if (selectedContent) {
-            selectedContent.style.display = 'block';
-            if (option === 'search') {
-                id('search-container').style.display = 'flex';
-            } else {
-                id('search-container').style.display = 'none';
-            }
+        if (option === "monster") {
+            findMon();
         } else {
-            console.error("Content for " + option + " not found.");
+            id(option).style.display = 'block';
         }
     }
 
     function findMon() {
-        let input = id("name").value;
-        input = input.split(" ").map(name => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()).join('');
-        // input = input.toLowerCase();
-        // input = input[0].toUpperCase() + input.slice(1);
-        // console.log(input);
-        fetchApi(input);
+        let input = id("input").value;
+        if (input !== "") {
+            input = input.split(" ").map(name => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()).join('');
+            fetchApi(input);
+            id("input").value = "";
+        }
+
     }
 
 
     function fetchApi(input) {
             fetch('http://localhost:5500/encyclopedia/flagships/' + input)
             .then(statusCheck)
-            .then((res) => res.json())
+            .then(res => res.json())
             .then(process)
-            .catch(e => console.error("Error: ", e));
+            .catch(handleError);
     }
 
 
     function process(data) {
-        console.log(data);
+        let name = data["name"];
+        let monClass = data["class"];
+        let elements = data["elements"];
+        let ailments = data["ailments"]
+        let debut = data["debut"];
+        let altForm = data["relatedMonsters"];
+
+        id("name").textContent = name;
+        id("class").textContent = "Monster Classification: " + monClass;
+        id("elements").textContent = "Elements: " + elements.join(", ");
+        id("ailments").textContent = "Ailments: " + ailments.join(", ");
+        id("debutGame").textContent = "Game Introduced: " + debut.join(", ");
+        id("altForms").textContent = "Related Monsters: " + altForm.join(", ");
+
+        id("monster").style.display = 'block'
     }
     async function statusCheck(res) {
         if (!res.ok) {
@@ -86,6 +85,11 @@
         return res;
     }
     
+    function handleError(e) {
+        id("monster").textContent = e;
+        id("monster").style.display = 'block'
+    }
+
     function id(id) {
         return document.getElementById(id);
     }
@@ -102,5 +106,8 @@
         return document.querySelectorAll(selector);
     }
 
+    function create(tag) {
+        return document.createElement(tag)
+    }
    
 })();
