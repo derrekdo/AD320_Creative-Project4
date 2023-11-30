@@ -19,18 +19,42 @@
             </nav>
             <div id="home" class="content">
                 <p>Welcome to the Monster Hunter Encyclopedia!</p>
+                <table id="monsTable">
+                    <tr>
+                        <th>Monsters</th>
+                    </tr>
+                    <tr>
+                        <td id="existMons"></td>
+                    </tr>
+                </table>
             </div>
             <div id="about" class="content">
                 <p>About</p>
             </div>
+            <div id="error" class="content">
+                <p id="errorMsg"></p>
+            </div>
             <div id="monster" class="content">
-                <h2 id="name"></h2>
-                <img id="render">
-                <p id="class"></p>
-                <p id="elements"></p>
-                <p id="ailments"></p>
-                <p id="debutGame"></p>
-                <p id="altForms"></p>
+                <div id="data">
+                    <div id="visual">
+                        <h2 id="name"></h2>
+                        <img id="render">
+                    </div>
+                    <div id="info">
+                        <p id="class"></p>
+                        <p id="elements"></p>
+                        <p id="ailments"></p>
+                        <p id="debutGame"></p>
+                        <p id="altForms"></p>
+                    </div>
+                </div>
+                <div id="discussion">
+                    <label for="createPost">
+                        <h2>Comments:</h2>
+                    </label>
+                    <textarea id="createPost"></textarea>
+                    <button id="post">post</button>
+                </div>
             </div>
         </div>
     </body>
