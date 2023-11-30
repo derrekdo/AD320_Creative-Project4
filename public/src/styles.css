@@ -1,3 +1,11 @@
+/*
+  Name: Derrek Do
+  Date: 11/23/2023
+
+  Style sheet that is applied to the html file, to make it look like a wiki page
+  hides other pages that arent currently being viewed
+*/
+
 body {
     background-color: #f0f0f0;
     margin: 0;
