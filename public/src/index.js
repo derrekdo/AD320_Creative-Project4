@@ -8,6 +8,7 @@
 
     function init() {
         hide();
+        home();
         // console.log("hello");
         // fetch('http://localhost:5500/encyclopedia/flagships/details')
         //     .then(statusCheck)
@@ -21,7 +22,7 @@
         id("search-btn").addEventListener("click", findMon);
         id("input").addEventListener("keydown", e => {
             if (e.key === 'Enter') {
-                findMon();
+                toggleContent("monster");
             };
         });
     }
@@ -42,6 +43,34 @@
         }
     }
 
+    function home() {
+        fetch(url)
+            .then(statusCheck)
+            .then(res => res.text())
+            .then(listMon)
+            .catch(handleError);
+    }
+
+    function listMon(data) {
+        let mons = data.split(", ");
+        mons.forEach(name => {
+            
+            id("existMons").appendChild(createLink(name));
+            id("existMons").append(document.createTextNode(", "));
+        });
+    }
+
+    function createLink(name) {
+        let span = create("span");
+        span.textContent = name;
+        span.id = "clickable";
+        span.addEventListener('click', () => {
+            hide();
+            fetchApi(name);
+        });
+        return span;
+    }
+
     function findMon() {
         let input = id("input").value;
         if (input !== "") {
@@ -51,18 +80,18 @@
         }
 
     }
-
+    
 
     function fetchApi(input) {
             fetch(url + input)
             .then(statusCheck)
             .then(res => res.json())
-            .then(process)
+            .then(display)
             .catch(handleError);
     }
 
 
-    function process(data) {
+    function display(data) {
         let name = data["name"];
         let monClass = data["class"];
         let elements = data["elements"];
@@ -73,7 +102,7 @@
 
         console.log(imagePath);
         
-        id("render").src = baseUrl + imagePath + name + '_icon.jpg';
+        id("render").src = baseUrl + imagePath + name + '.jpg';
 
         id("name").textContent = name;
         id("class").textContent = "Monster Classification: " + monClass;
@@ -92,8 +121,9 @@
     }
     
     function handleError(e) {
-        id("monster").textContent = e;
-        id("monster").style.display = 'block'
+        id("errorMsg").textContent = e;
+        id("error").style.display = 'block';
+
     }
 
     function id(id) {
