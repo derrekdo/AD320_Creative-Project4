@@ -47,7 +47,7 @@ let monstersDetails = [
     class: "Elder Dragon",
     elements: ["Ice", "Dragon"],
     ailments: ["Iceblight", "Dragonblight"],
-    relatedMonsters: ["Rusted Kushala", "Risen Kushala"],
+    relatedMonsters: ["Rusted Kushala Daora", "Risen Kushala Daora"],
     debut: ["Monster Hunter 2"],
     imagePath: "renders/kushala/",
     comments: []
