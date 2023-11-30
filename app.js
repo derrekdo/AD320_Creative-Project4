@@ -1,5 +1,13 @@
-// create get reqs here
+/*
+  Name: Derrek Do
+  Date: 11/23/2023
 
+  API for the website, currently only contains the flagship monsters (and their information)
+  of the monster hunter series and has every monster classification that is not used as of this moment
+  
+  This file also include the backend server that allows for api data to be accessed and sent back.
+  Currently only has get requests to retrieve data. post requests created but currently unsuable
+*/
 'use strict';
 const express = require('express');
 const path = require('path');
@@ -7,12 +15,15 @@ const app = express();
 const port = 5500
 const cors = require('cors');
 app.use(cors());
+
 //Text files:
+//list of all monsters
 let flagshipMonsters = ["Rathalos", "Azure Rathalos", "Kushala Daora", "Tigrex", "Nargacuga",
                     "Lagiacrus", "Zinogre", "Brachydios", "Gore Magala", "Seregios",
                         "Glavenus", "Valstrax", "Nergigante", "Velkhana", "Magnamalo", "Malzeno"];
 
 //Json Files
+//data in api, that contains all info for each monster
 let monstersDetails = [
   { name: "Rathalos",
     class: "Flying Wyvern",
@@ -20,7 +31,8 @@ let monstersDetails = [
     ailments: ["Fireblight"],
     relatedMonsters: ["Azure Rathalos", "Silver Rathalos", "Dreadking Rathalos", "Apex Rathalos"],
     debut: ["Monster Hunter"],
-    imagePath: "renders/rathalos/"
+    imagePath: "renders/rathalos/",
+    comments: ["cool", "lame"]
   }, 
   { name: "Azure Rathalos",
     class: "Flying Wyvern",
@@ -28,7 +40,8 @@ let monstersDetails = [
     ailments: ["Fireblight"],
     relatedMonsters: ["Rathalos", "Silver Rathalos", "Dreadking Rathalos", "Apex Rathalos"],
     debut: ["Monster Hunter G"],
-    imagePath: "renders/azurerathalos/"
+    imagePath: "renders/azurerathalos/",
+    comments: []
   },
   { name: "Kushala Daora",
     class: "Elder Dragon",
@@ -36,7 +49,8 @@ let monstersDetails = [
     ailments: ["Iceblight", "Dragonblight"],
     relatedMonsters: ["Rusted Kushala", "Risen Kushala"],
     debut: ["Monster Hunter 2"],
-    imagePath: "renders/kushala/"
+    imagePath: "renders/kushala/",
+    comments: []
   },
   { name: "Tigrex",
     class: "Flying Wyvern",
@@ -44,7 +58,8 @@ let monstersDetails = [
     ailments: ["None"],
     relatedMonsters: ["Brute Tigrex", "Molten Tigrex", "Grimclaw Trigrex"],
     debut: ["Monster Hunter Portable 2nd", "Monster Hunter Freedom 2"],
-    imagePath: "renders/tigrex/"
+    imagePath: "renders/tigrex/",
+    comments: []
   },
   { name: "Nargacuga",
     class: "Flying Wyvern",
@@ -52,7 +67,8 @@ let monstersDetails = [
     ailments: ["Bleed"],
     relatedMonsters: ["Green Nargacuga", "Lucent Nargacuga", "Silverwind Nargacuga"],
     debut: ["Monster Hunter Portable 2nd G", "Monster Hunter Freedom Unite"],
-    imagePath: "renders/nargacuga/"
+    imagePath: "renders/nargacuga/",
+    comments: []
   },
   { name: "Lagiacrus",
     class: "Leviathan",
@@ -60,7 +76,8 @@ let monstersDetails = [
     ailments: ["Thunderblight"],
     relatedMonsters: ["Ivory Lagiacrus", "Abyssal Lagiacrus"],
     debut: ["Monster Hunter 3"],
-    imagePath: "renders/lagiacrus/"
+    imagePath: "renders/lagiacrus/",
+    comments: []
   },
   { name: "Zinogre",
     class: "Fanged Wyvern",
@@ -68,7 +85,8 @@ let monstersDetails = [
     ailments: ["Thunderblight"],
     relatedMonsters: ["Stygian Zinogre", "Thunderlord Zinogre", "Apex Zinogre"],
     debut: ["Monster Hunter Portable 3rd"],
-    imagePath: "renders/zinogre/"
+    imagePath: "renders/zinogre/",
+    comments: []
   },
   { name: "Brachydios",
     class: "Brute Wyvern",
@@ -76,7 +94,8 @@ let monstersDetails = [
     ailments: ["Blastblight"],
     relatedMonsters: ["Raging Brachydios"],
     debut: ["Monster Hunter 3G", "Monster Hunter 3 Ultimate"],
-    imagePath: "renders/brachydios/"
+    imagePath: "renders/brachydios/",
+    comments: []
   },
   { name: "Gore Magala",
     class: "???",
@@ -84,7 +103,8 @@ let monstersDetails = [
     ailments: ["Frenzy Virus"],
     relatedMonsters: ["Shagaru Magala", "Chaotic Gore Magala", "Risen Shagaru Magala"],
     debut: ["Monster Hunter 4"],
-    imagePath: "renders/goremagala/"
+    imagePath: "renders/goremagala/",
+    comments: []
   },
   { name: "Seregios",
     class: "Flying Wyvern",
@@ -92,7 +112,8 @@ let monstersDetails = [
     ailments: ["Bleed"],
     relatedMonsters: ["None"],
     debut: ["Monster Hunter 4G", "Monster Hunter 4 Ultimate"],
-    imagePath: "renders/seregios/"
+    imagePath: "renders/seregios/",
+    comments: []
   },
   { name: "Glavenus",
     class: "Brute Wyvern",
@@ -100,7 +121,8 @@ let monstersDetails = [
     ailments: ["Fireblight"],
     relatedMonsters: ["Hellblade Glavenus", "Acidic Glavenus"],
     debut: ["Monster Hunter X", "Monster Hunter Generations"],
-    imagePath: "renders/glavenus/"
+    imagePath: "renders/glavenus/",
+    comments: []
   },
   { name: "Valstrax",
     class: "Elder Dragon",
@@ -108,7 +130,8 @@ let monstersDetails = [
     ailments: ["Dragonblight"],
     relatedMonsters: ["Crimson Glow Valstrax", "Risen Crimson Glow Valstrax"],
     debut: ["Monster Hunter XX", "Monster Hunter Generations Ultimate"],
-    imagePath: "renders/valstrax/"
+    imagePath: "renders/valstrax/",
+    comments: []
   },
   { name: "Nergigante",
     class: "Elder Dragon",
@@ -116,7 +139,8 @@ let monstersDetails = [
     ailments: ["None"],
     relatedMonsters: ["Ruiner Nergigante"],
     debut: ["Monster Hunter World"],
-    imagePath: "renders/nergigante/"
+    imagePath: "renders/nergigante/",
+    comments: []
   },
   { name: "Velkhana",
     class: "Elder Dragon",
@@ -124,7 +148,8 @@ let monstersDetails = [
     ailments: ["IceBlight"],
     relatedMonsters: ["None"],
     debut: ["Monster Hunter World: Iceborne"],
-    imagePath: "renders/velkhana/"
+    imagePath: "renders/velkhana/",
+    comments: []
   },
   { name: "Magnamalo",
     class: "Fanged Wyvern",
@@ -132,7 +157,8 @@ let monstersDetails = [
     ailments: ["Hellfireblight"],
     relatedMonsters: ["Scorned Magnamalo"],
     debut: ["Monster Hunter Rise"],
-    imagePath: "renders/magnamalo/"
+    imagePath: "renders/magnamalo/",
+    comments: []
   },
   { name: "Malzeno",
     class: "Elder Dragon",
@@ -140,16 +166,12 @@ let monstersDetails = [
     ailments: ["Dragonblight", "Bloodblight"],
     relatedMonsters: ["Primordial Malzeno"],
     debut: ["Monster Hunter Rise: Sunbreak"],
-    imagePath: "renders/malzeno/"
-  }
-  
-  /*create another json taht will carry all elements and their description
-    ailments and their description
-    monster class
-    subspecies/variants/deviants/etc
-    the game and descripton
-  */
+    imagePath: "renders/malzeno/",
+    comments: []
+  }  
 ];
+
+//data in api, that has all descriptions for all monster classifications
 let monsterClasses = [
   { class: "Bird Wyvern", desc: "Bird Wyverns are small to medium-sized monsters with avian characteristics." },
   { class: "Brute Wyvern", desc: "Brute Wyverns are characterized by their powerful physical attacks and aggressive behavior in combat." },
@@ -172,6 +194,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const PORT = process.env.PORT || 5500;
 app.listen(PORT);
 
+//get requests for all monsters
 app.get('/encyclopedia/flagships', (req, res) => {
   res.type('text');
   let result = "Rathalos";
@@ -181,8 +204,7 @@ app.get('/encyclopedia/flagships', (req, res) => {
   res.send(result);
 });
 
-
-
+//get request for the monster searched, returns data as json
 app.get('/encyclopedia/flagships/:name', (req, res) => {
   let name = req.params.name;
   let monData = monstersDetails.find(mon => mon.name === name) 
@@ -192,4 +214,30 @@ app.get('/encyclopedia/flagships/:name', (req, res) => {
   } else {
     res.status(404).send('Monster is not included or does not exist')
   }
+});
+
+
+
+//Creates and fetches comments, currently does not work
+app.post('encyclopedia/flagsips/:name/comments', (req, res) => {
+  let name = req.params.name;
+  let comment = req.body.comment;
+
+  if(!comment) {
+    res.type('text');
+    res.status(400).send('Cannot post empty comment');
+  } else {
+    let monData = monstersDetails.find(mon => mon.name === name);
+    monData.comments.push(comment);
+    res.status(200).send('successfuilly created comment');
+  } 
+});
+
+app.get('encyclopedia/flagships/:name/comments', (res, req) => {
+  let name = req.params.name;
+  let monData = monstersDetails.find(mon => mon.name == name);
+  
+  res.type('json');
+  res.send({comments: monData.comments});
+
 });
