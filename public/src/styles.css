@@ -6,15 +6,13 @@ body {
 
 #container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: auto;
     background-color: #fff;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     text-align: center;
-    color: #333;
 }
 
 nav {
@@ -41,14 +39,51 @@ button {
     display: none;
 }
 
-#home.content, #home-btn.active {
+#home .content, #home-btn.active {
     display: block;
 }
 
-#about.content, #about-btn.active {
+#about .content, #about-btn.active {
     display: block;
 }
 
-#monster.content, #search-btn.active {
+#monster .content, #search-btn.active {
     display: block;
 }
+
+#error .content, #search-btn.active {
+    display: block;
+}
+
+#data {
+    display: flex;
+} 
+
+#info {
+    padding-top: 50px;
+    padding-left: 50px;
+}
+
+#render {
+    height: auto;
+    max-height: 200px;
+    margin-bottom: 10px;
+}
+
+#createPost {
+    width: 60%;
+}
+#post {
+    padding: 10px;
+    cursor: pointer;
+    vertical-align: bottom; 
+}
+
+table, th, td {
+    border:1px solid black;
+}
+
+#clickable:hover {
+    text-decoration: underline;
+}
+
